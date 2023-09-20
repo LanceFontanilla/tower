@@ -1,6 +1,6 @@
 <template>
 <div>
-  Home Page
+  Home Page is cool
   <div v-for="e in events" :key="e.id">
     <EventCard :event="e"/>
   </div>
