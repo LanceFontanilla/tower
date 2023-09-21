@@ -18,7 +18,7 @@
             <option value="digital">digital</option>
             </select>
         </div>
-         <div class="mb-1 col-6">
+        <div class="mb-1 col-6">
             <label for="event-location">Location</label>
             <input v-model="eventData.location" id="event-location" class="form-control" type="text" minlength="5" maxlength="500" placeholder="location of event" required>
         </div>

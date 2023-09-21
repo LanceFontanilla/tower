@@ -6,6 +6,7 @@ import { api } from "./AxiosService.js"
 
 class EventsService{
     async getEvents(){
+        AppState.events = []
         const res = await api.get('api/events')
         logger.log('getting events', res.data)
         AppState.events = res.data.map(event => new Event(event))
@@ -16,6 +17,13 @@ class EventsService{
         logger.log(res.data, 'getting event by id')
         AppState.activeEvent = new Event(res.data)
     }
+    async getCommentsByEvent(eventId) {
+        logger.log(eventId, 'this is the event id')
+        const res = await api.get(`api/events/${eventId}/comments`)
+        logger.log('got comments by eventId', res.data)
+        AppState.comments = res.data.map(comment => new Comment(comment))
+    }
+
     async createEvent(eventData){
         const res = await api.post('api/events', eventData)
         logger.log('created event', res.data)
