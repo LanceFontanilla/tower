@@ -14,12 +14,9 @@ class CommentsService {
         return comment
     }
 
-    async deleteComment(commentId) {
+    async deleteComment(commentId, userId) {
         const foundComment = await dbContext.Comments.findById(commentId)
-        if (!foundComment) {
-            throw new BadRequest("No comment to delete at id:" + commentId)
-        }
-        if (commentId.creatorId != commentId.userInfo.id) throw new Forbidden("This is not your comment, you cannot delete it.")
+        if (foundComment.creatorId != userId) throw new Forbidden("This is not your comment, you cannot delete it.")
         await foundComment.remove()
         return `Your comment has been removed.`
     }

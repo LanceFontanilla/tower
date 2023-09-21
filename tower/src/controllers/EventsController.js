@@ -14,8 +14,8 @@ export class EventsController extends BaseController {
         this.router
             .get("", this.getEvents)
             .get('/:eventId', this.getEventById)
-            .get('/tickets', this.getTicketsByEvent)
-            .get('/comments', this.getCommentsByEvent)
+            .get('/:eventId/tickets', this.getTicketsByEvent)
+            .get('/:eventId/comments', this.getCommentsByEvent)
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.createEvent)
             .put('/:eventId', this.editEvent)
@@ -69,9 +69,8 @@ export class EventsController extends BaseController {
     async editEvent(req, res, next) {
         try {
             const updates = req.body
-            updates.accountId = req.userInfo.id
             const eventId = req.params.eventId
-            const editedEvent = await eventsService.editEvent(eventId, updates)
+            const editedEvent = await eventsService.editEvent(eventId, updates, req.userInfo.id)
             res.send(editedEvent)
         } catch (error) {
             next(error)

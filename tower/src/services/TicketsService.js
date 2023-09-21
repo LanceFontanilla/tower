@@ -1,7 +1,8 @@
 import { dbContext } from "../db/DbContext.js"
 import { BadRequest, Forbidden } from "../utils/Errors.js"
 import { logger } from "../utils/Logger.js"
-
+import { eventsService } from "./EventsService.js"
+eventsService
 
 class TicketsService {
 
@@ -18,17 +19,13 @@ class TicketsService {
     }
 
     async getTicketsByEvent(eventId) {
-        const tickets = await dbContext.Tickets.find({ eventId }).populate({ path: 'profile', populate: { path: 'creator ticketCount' } })
-
+        const tickets = await dbContext.Tickets.find({ eventId }).populate('profile')
         return tickets
     }
 
-    async deleteTicket(ticketId) {
+    async deleteTicket(ticketId, userId) {
         const foundTicket = await dbContext.Tickets.findById(ticketId)
-        if (!foundTicket) {
-            throw new BadRequest("No ticket at id:" + ticketId)
-        }
-        if (ticketId.creator != ticketId.userInfo.id) throw new Forbidden("This is not your ticket, you cannot delete it.")
+        if (foundTicket.accountId != userId) throw new Forbidden("This is not your ticket, you cannot delete it.")
         await foundTicket.remove()
         return `Your ticket has been removed`
     }

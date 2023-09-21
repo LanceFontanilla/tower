@@ -21,11 +21,11 @@ class EventsService {
         await event.populate('creator ticketCount')
         return event
     }
-    async editEvent(eventId, updates) {
+    async editEvent(eventId, updates, userId) {
         const originalEvent = await dbContext.Events.findById(eventId)
         if (!originalEvent) throw new Error(`Unable to find exhibit at ${eventId}`)
         if (originalEvent.isCanceled == true) throw new Error(`Event has been canceled, you cannot edit a canceled event.`)
-        if (originalEvent.creatorId != updates.userInfo.id) throw new Forbidden("You do not own this and cannot edit it.")
+        if (originalEvent.creatorId != userId) throw new Forbidden("You do not own this and cannot edit it.")
         originalEvent.name = updates.name != undefined ? updates.name : originalEvent.name
         originalEvent.type = updates.type != undefined ? updates.type : originalEvent.type
         originalEvent.location = updates.location != undefined ? updates.location : originalEvent.location
