@@ -1,9 +1,14 @@
 <template>
-    <div class="card event-img">
-      <img :src="event.coverImg" alt="">
-
-    </div>
-</template>
+  <router-link style="text-decoration: none; color:black" :to="{ name: 'Event Details', params: { eventId: event.id } }">
+    <div class="card event-img ">
+      <img class="img-fluid" :src="event.coverImg" alt="">
+      <div>
+        <p>{{ event.name }}</p>
+        <p>{{ event.location }}</p>
+        <p>{{ event.startDate }}</p>
+      </div>
+    </div></router-link>
+    </template>
 
 
 <script>

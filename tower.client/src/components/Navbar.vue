@@ -1,11 +1,22 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-black d-flex justify-content-between px-3">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-black d-flex justify-content-between px-3 pt-0">
     <router-link class="navbar-brand " :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
-        <span class="fs-1">
-          <img alt="logo" src="../assets/img/T.png" height="55" />ower</span>
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        <span class="fs-2 ">
+          <img alt="logo" src="../assets/img/T.png" height="40" />ower</span>
       </div>
     </router-link>
+
+    <ModalWrapper id="create-event" v-if="user.isAuthenticated">
+      <template #button>
+        <i class="mdi mdi-plus-box"></i> Create Event
+      </template>
+
+      <template #body>
+        <EventForm/>
+      </template>
+    </ModalWrapper>
+
     <div class="text-end">
       <Login />
     </div>
@@ -15,11 +26,17 @@
 
 <script>
 import Login from './Login.vue';
+import ModalWrapper from '../components/ModalWrapper.vue'
+import { AppState } from '../AppState';
+import { computed } from 'vue';
+
 export default {
   setup() {
-    return {}
+    return {
+      user: computed(() => AppState.user)
+    }
   },
-  components: { Login }
+  components: { Login, ModalWrapper }
 }
 </script>
 

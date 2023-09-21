@@ -33,6 +33,9 @@ export default {
   --main-height: calc(100vh - 32px - 64px);
 }
 
+main{
+  background-color: rgba(42, 45, 58, 1);
+}
 
 .icon{
   height: 10px;
