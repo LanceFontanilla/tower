@@ -2,7 +2,7 @@
   <router-link style="text-decoration: none; color:black" :to="{ name: 'Event Details', params: { eventId: event.id } }">
     <div class="card event-img ">
       <img class="img-fluid" :src="event.coverImg" alt="">
-      <div>
+      <div class="ms-2 mt-2">
         <p>{{ event.name }}</p>
         <p>{{ event.location }}</p>
         <p>{{ event.startDate }}</p>

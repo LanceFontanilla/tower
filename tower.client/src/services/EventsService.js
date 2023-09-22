@@ -1,6 +1,7 @@
 import { AppState } from "../AppState.js"
 import { Comment } from "../models/Comment.js"
 import { Event} from "../models/Event.js"
+import { Ticket } from "../models/Ticket.js"
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
@@ -24,6 +25,13 @@ class EventsService{
         logger.log('got comments by eventId', res.data)
         AppState.comments = res.data.map(comment => new Comment(comment))
     }
+    async getTicketsByEvent(eventId) {
+        const res = await api.get(`api/events/${eventId}/tickets`)
+        
+        logger.log('tickets', res.data)
+        AppState.activeEventTickets = res.data.map(ticket => new Ticket(ticket))
+        logger.log('app event tickets', AppState.activeEventTickets)
+    }
 
     async createEvent(eventData){
         const res = await api.post('api/events', eventData)
@@ -33,10 +41,13 @@ class EventsService{
     }
     async cancelEvent(eventId){
         logger.log('this is the eventId in the service', eventId)
-        const res = await api.put(`api/events/${eventId}`)
+
+        const res = await api.delete(`api/events/${eventId}`)
         logger.log('this is a cancel', res.data)
-        res.data.isCanceled = true
-        AppState.canceledEvent = new Event(res.data)
+
+        const canceledEvent = new Event(res.data)
+        return canceledEvent
+        
         
         
       

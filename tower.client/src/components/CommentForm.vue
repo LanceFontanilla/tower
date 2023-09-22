@@ -12,7 +12,7 @@
                     Join the Conversation
                 </p>
             </div>
-            <form @submit="createComment">
+            <form @submit.prevent="createComment">
                 <div class="my-3">
                     <textarea v-model="commentData.body" placeholder="Tell the people..." class="form-control"
                         id="exampleFormControlTextarea1" rows="3"></textarea>
@@ -30,7 +30,7 @@ import { onMounted, ref } from 'vue';
 import Pop from '../utils/Pop';
 import { commentsService } from '../services/CommentsService'
 import { useRoute } from 'vue-router';
-import { AppState } from '../AppState';
+
 
 
 export default {
@@ -57,7 +57,6 @@ export default {
                     Pop.error(error)
                 }
             },
-
         };
         
     },

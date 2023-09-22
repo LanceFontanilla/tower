@@ -1,4 +1,5 @@
 import { AppState } from "../AppState"
+import { Comment } from "../models/Comment.js"
 import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
 
@@ -13,10 +14,13 @@ class CommentsService{
         return newComment
     }
     async deleteComment(commentId){
-        const res = await api.delete(`api/comment/${commentId}`)
+        const res = await api.delete(`api/comments/${commentId}`)
         logger.log('delete comment', res.data)
-        let indexToRemove = AppState.activeEventComment.findIndex(comment => comment.id == commentId)
-        AppState.activeEventComment.splice(indexToRemove, 1)
+        
+        const filteredArray = AppState.comments.filter(comment => comment.id != commentId)
+        AppState.comments = filteredArray
+        return filteredArray
+
     }
 }
 
