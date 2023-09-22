@@ -1,4 +1,5 @@
 import { AppState } from "../AppState.js"
+import { Comment } from "../models/Comment.js"
 import { Event} from "../models/Event.js"
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
@@ -30,6 +31,17 @@ class EventsService{
         const newEvent = new Event(res.data)
         return newEvent
     }
+    async cancelEvent(eventId){
+        logger.log('this is the eventId in the service', eventId)
+        const res = await api.put(`api/events/${eventId}`)
+        logger.log('this is a cancel', res.data)
+        res.data.isCanceled = true
+        AppState.canceledEvent = new Event(res.data)
+        
+        
+      
+    }
+
 }
 
 export const eventsService = new EventsService()

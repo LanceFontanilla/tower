@@ -13,5 +13,10 @@ export const AppState = reactive({
   activeEvent: null,
 
   /**@type {Comment[]} */
+  activeEventComment: [],
+
+  /**@type {Comment[]} */
   comments: [],
+
+  isCanceled: false
 })

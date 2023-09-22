@@ -2,7 +2,7 @@
 <template>
 <div class="container-fluid">
     <section v-if="activeEvent" class="p-4">
-        <div class=" bg-light-purple ">
+        <div class=" bg-light-purple text-light ">
             <div class="row p-4">
                 <div class="col-md-5 img-card">
                     <img class="img-fluid" :src="activeEvent.coverImg" alt="">
@@ -26,6 +26,13 @@
                         <div class="col-12">
                             <span class="mb-4">Event Hosted By:</span><br><img class="profile-pic mt-1" :src="activeEvent.creator.picture" alt="">  <span class="fw-bold">{{ activeEvent.creator.name }}</span> 
                         </div>
+                        <div v-if="activeEvent.isCancelled == true" class="bg-danger">
+                            <h1>THIS EVENT IS CANCELLED!</h1>
+                        </div>
+                        <div class="text-end">
+                            <button v-if="activeEvent.creatorId == account.id" @click="cancelEvent" class="btn btn-danger">Cancel Event</button>
+                        </div>
+
                     </div>
                 </div>    
 
@@ -45,13 +52,13 @@
         </div>
     </section>
     <section class="p-5">
-        <CommentForm/>
-    </section>
-<section class="text-light">
-        <div v-for="c in comments" :key="c.id" class="col-6 col-md-3">
+        <CommentForm/> 
+        <div v-for="c in comments" :key="c.id" >
         <CommentCard :comment="c"/>
-
         </div>
+    </section>
+
+<section class=" p-5">
 
 </section>
 </div>
@@ -66,15 +73,14 @@ import { eventsService } from '../services/EventsService';
 import { logger } from '../utils/Logger';
 import { AppState } from '../AppState';
 import CommentCard from '../components/CommentCard.vue'
+import { commentsService } from '../services/CommentsService';
 export default {
 setup() {
     const route = useRoute()
     onMounted(() => {
         getEventById()
         getCommentsByEvent()
-        
-        
-    })
+    });
     async function getEventById(){
         try {
             const eventId = route.params.eventId
@@ -93,13 +99,29 @@ setup() {
             Pop.error(error)
         }
     }
+    async function cancelEvent() {
+        try {
+            const eventId = route.params.eventId
+            logger.log('lets cancel', eventId)
+            if (await Pop.confirm('Are you sure you want to cancel this event?')) {
+                await eventsService.cancelEvent(eventId)
+                logger.log('canceling', eventId)
+            }
+        } catch (error) {
+            Pop.error(error)
+        }
+    }
+    
+
     return {
+        cancelEvent,
         getEventById,
         getCommentsByEvent,
         comments: computed(() => AppState.comments),
         activeEvent: computed(() => AppState.activeEvent),
         account: computed(() => AppState.account),
         user: computed(() => AppState.user),
+
 
     };
 },
