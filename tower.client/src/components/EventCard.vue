@@ -1,8 +1,8 @@
 <template>
   <router-link style="text-decoration: none; color:black" :to="{ name: 'Event Details', params: { eventId: event.id } }">
-    <div class="card event-img ">
-      <img class="img-fluid" :src="event.coverImg" alt="">
-      <div class="ms-2 mt-2">
+    <div class="cover-img card">
+     <img :src="event.coverImg" alt="" class="img-fluid rounded">
+      <div class="p-2 ms-2 mt-2">
         <p>{{ event.name }}</p>
         <p>{{ event.location }}</p>
         <p>{{ event.startDate }}</p>
@@ -12,6 +12,9 @@
 
 
 <script>
+import { computed } from 'vue';
+import { AppState } from '../AppState.js';
+
 
 import { Event } from '../models/Event.js'
 
@@ -19,7 +22,7 @@ export default {
     props: {event: {type: Event, required: true}},
     setup(){
     return { 
-
+    coverImg: computed(() => `url(${AppState.events?.coverImg})`),
     }
     }
 };
@@ -28,11 +31,43 @@ export default {
 
 <style lang="scss" scoped>
 
-.event-img{
-  height: 50vh;
+.cover-img{
   width: 100%;
-  object-fit: cover;
-  object-position: center;
+  
+  background-position: center;
+  background-size: cover;
 }
 
+.event-card{
+  height: 65vh;
+  background-color: rgb(180, 192, 242); ;
+}
+
+
+
+
+.bg-light-purple{
+    background-color: rgba(71, 76, 97, 1) 
+}
+
+.bg-dark-purple{
+    background-color: rgb(36, 40, 57) 
+}
+
+.bg-purple{
+    background-color: rgb(107, 111, 234) 
+}
+
+.convo-text{
+    color:  rgb(127, 158, 225) 
+}
+
+.convo-box{
+    color: rgb(180, 192, 242); 
+}
+
+.submit-button{
+    background-color: rgb(180, 192, 242); 
+    color: black
+}
 </style>

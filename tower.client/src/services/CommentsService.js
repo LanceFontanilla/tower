@@ -8,7 +8,7 @@ class CommentsService{
 
     async createComment(comment){
         const res = await api.post('api/comments', comment)
-        logger.log('creating posts', res.data)
+        logger.log('creating comments', res.data)
         const newComment = new Comment(res.data)
         AppState.comments.push(newComment)
         return newComment

@@ -30,9 +30,13 @@ class EventsService{
         
         logger.log('tickets', res.data)
         AppState.activeEventTickets = res.data.map(ticket => new Ticket(ticket))
-        logger.log('app event tickets', AppState.activeEventTickets)
+        logger.log('app event tickets', res.data)
     }
-
+    async getTicketsByAccount(ticketData) {
+        const res = await api.get('/account/tickets', ticketData)
+        logger.log('my tickets', res.data)
+        AppState.myTickets = res.data.map(ticket => new Ticket(ticket))
+    }
     async createEvent(eventData){
         const res = await api.post('api/events', eventData)
         logger.log('created event', res.data)

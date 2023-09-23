@@ -87,4 +87,10 @@ export default {
   background-color: rgba(71, 76, 97, 1) 
 }
 
+.cover-img{
+  background-image: v-bind(coverImg);
+  min-height: 50vh;
+  background-position: center;
+  background-size: cover;
+}
 </style>

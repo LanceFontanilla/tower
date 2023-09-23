@@ -21,25 +21,27 @@
                         </div>
                         <div class="col-12 d-flex justify-content-between">
                             <p>Total Capacity: <span>{{ capacity }}</span></p>
-                            <p>Number of Ticket Holders: <span>{{ ticketCount }}</span></p>
+                            <p class="ms-2">Number of Ticket Holders: <span>{{ ticketHolder }}</span></p>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <span class="mb-4">Event Hosted By:</span><br><img class="profile-pic mt-1" :src="activeEvent.creator.picture" alt="">  <span class="fw-bold">{{ activeEvent.creator.name }}</span> 
+                        <div class="col-12 col-md-6 mt-3">
+                            <span class="mb-4">Event Hosted By:</span><br><img class="profile-pic my-1" :src="activeEvent.creator.picture" alt="">  <span class="fw-bold">{{ activeEvent.creator.name }}</span> 
                         </div>
-                        <div v-if="activeEvent.ticketCount <= 0 & activeEvent.isCanceled == false" class="col-12 col-md-6 bg-danger d-flex justify-content-center align-items-center">
-                            <h3>SOLD OUT</h3>
-                        </div>
-                        <div v-else-if="!hasTicket && user.isAuthenticated" class="col-12 col-md-6 bg-dark-purple text-center  d-flex justify-content-center align-items-center selectable" @click="createTicket" role="button">
-                            <h4>Click here to attend now!</h4>
-                        </div>
-                        <div v-else-if="user.isAuthenticated" class="col-12 col-md-6 bg-purple text-center  d-flex justify-content-center align-items-center selectable" @click="deleteTicket" role="button">
-                            <h4>Click here to un-attend!</h4>
+                        <div v-if="activeEvent.isCanceled == false " class="col-12 col-md-6 d-flex justify-content-center align-items-center p-0 my-3" >
+                            <div v-if="activeEvent.capacity <= 0" class="col-12 col-md-6 bg-danger d-flex justify-content-center align-items-center">
+                                <h3>SOLD OUT</h3>
+                            </div>
+                            <div v-else-if="!hasTicket && user.isAuthenticated" class="col-12 col-md-6 bg-dark-purple text-center  d-flex justify-content-center align-items-center selectable p-3 rounded" @click="createTicket" role="button">
+                                <h4>Click here to attend!</h4>
+                            </div>
+                            <div v-else-if="user.isAuthenticated" class="col-12 col-md-6 bg-purple text-center d-flex justify-content-center align-items-center selectable p-3 rounded" @click="deleteTicket" role="button">
+                                <h4>Click to un-attend!</h4>
+                            </div>
                         </div>
                         <div v-if="activeEvent.isCanceled == true" class="col-12 bg-danger mt-3 d-flex justify-content-center align-items-center">
                             <h3>THIS EVENT HAS BEEN CANCELED!</h3>
                         </div>
                         
-                        <div class="text-end">
+                        <div class="text-start">
                             <button v-if="activeEvent.creatorId == account.id & activeEvent.isCanceled == false" @click="cancelEvent" class="btn btn-danger">Cancel Event</button>
                         </div>
 
@@ -54,16 +56,18 @@
     </section>
 
     <section class="p-4">
-        <div class="col-12 bg-light-purple text-light">
-            <div class="comment-card ">
-                <div v-for="t in tickets " :key="t.id">
-                    <img  :src="t.profile.picture" alt="" class="profile-pic">
-                    <span> {{ t.profile.name }}</span>
-                </div>
+        
+        <div class="convo-text mt-3">
+            <p>See who is attending</p> 
+        </div>
+        <div class="col-12 m-0 bg-light-purple convo-box row  ">                
+            <div v-for="t in tickets " :key="t.id" class="p-3 col-3">
+                <img  :src="t.profile.picture" alt="" class="profile-pic">
+                <span class="ms-3"> {{ t.profile.name }}</span>
             </div>
-
         </div>
     </section>
+
     <section class="p-5">
         <CommentForm/> 
         <div v-for="c in comments" :key="c.id" >
@@ -79,7 +83,7 @@
 </template>
 
 <script>
-import { computed, onMounted, } from 'vue';
+import { computed, onMounted, watchEffect, } from 'vue';
 import Pop from '../utils/Pop';
 import { useRoute } from 'vue-router';
 import { eventsService } from '../services/EventsService';
@@ -92,7 +96,7 @@ export default {
 setup() {
 
     const route = useRoute()
-    onMounted(() => {
+    watchEffect(() => {
         getEventById()
         getCommentsByEvent()
         getTicketsByEvent()
@@ -152,9 +156,9 @@ setup() {
         user: computed(() => AppState.user),
         tickets: computed (() => AppState.activeEventTickets),
         hasTicket: computed(() => AppState.activeEventTickets.find(ticket => ticket.accountId == AppState.account.id)),
-        // TODO some logic for computing remaining ticket count...think event capacity and ticket holders
         capacity: computed(() => AppState.activeEvent.capacity - AppState.activeEventTickets.length),
-        ticketCount: computed (() => AppState.activeEventTickets.length),
+        ticketHolder: computed (() => AppState.activeEventTickets.length),
+        isCanceled: computed(() => AppState.activeEvent.isCanceled ),
         async createTicket() {
             try {
                 let ticketData = { eventId: route.params.eventId }

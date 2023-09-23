@@ -3,9 +3,9 @@
 <div class="bg-light-purple text-light">
   
     <div class="row p-0 m-0 p-2">
-      <div class="col-3 p-1 me d-flex justify-content-center"><img class="profile-pic mx-2" :src="comment.creator.picture" alt=""> 
+      <div class="col-12 col-md-3 p-1 me d-flex justify-content-center"><img class="profile-pic mx-2" :src="comment.creator.picture" alt=""> 
       </div>
-      <div class="col-8 card  ">
+      <div class="col-12 col-md-8 card  ">
         <div class="col-12 fs-4 fw-bold">
         {{ comment.creator.name }}
         </div>

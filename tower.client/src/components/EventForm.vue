@@ -70,7 +70,7 @@ setup() {
     async createEvent(){
         try {
             let newEvent = await eventsService.createEvent(eventData.value)
-            Pop.toast('Event Created', 'success')
+            Pop.toast('Event Created', 'success', 'center')
             resetForm()
             Modal.getOrCreateInstance('#create-event').hide()
             router.push({name: 'Event Details', params:{eventId: newEvent.id}})
