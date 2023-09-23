@@ -13,7 +13,7 @@
                 </p>
             </div>
             <form @submit.prevent="createComment">
-                <div class="my-3">
+                <div class="my-3 input-group">
                     <textarea v-model="commentData.body" placeholder="Tell the people..." class="form-control"
                         id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>

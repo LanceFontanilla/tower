@@ -32,10 +32,11 @@ class EventsService{
         AppState.activeEventTickets = res.data.map(ticket => new Ticket(ticket))
         logger.log('app event tickets', res.data)
     }
-    async getTicketsByAccount(ticketData) {
-        const res = await api.get('/account/tickets', ticketData)
+    async getTicketsByAccount() {
+        const res = await api.get('/account/tickets')
         logger.log('my tickets', res.data)
         AppState.myTickets = res.data.map(ticket => new Ticket(ticket))
+        //await this.getMyEvents()
     }
     async createEvent(eventData){
         const res = await api.post('api/events', eventData)
@@ -51,12 +52,19 @@ class EventsService{
 
         const canceledEvent = new Event(res.data)
         return canceledEvent
-        
-        
-        
-      
     }
 
+    // async getMyEvents() {
+
+    // AppState.myTickets.forEach(ticket => {
+    //     let event = AppState.events.find((event) => event.id == ticket.eventId)
+    //     if (event != undefined) {
+    //     AppState.myEvents.push(event)
+            
+    //     }
+    //     });
+
+    // }
 }
 
 export const eventsService = new EventsService()

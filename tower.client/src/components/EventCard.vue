@@ -1,13 +1,21 @@
 <template>
   <router-link style="text-decoration: none; color:black" :to="{ name: 'Event Details', params: { eventId: event.id } }">
-    <div class="cover-img card">
-     <img :src="event.coverImg" alt="" class="img-fluid rounded">
-      <div class="p-2 ms-2 mt-2">
-        <p>{{ event.name }}</p>
-        <p>{{ event.location }}</p>
-        <p>{{ event.startDate }}</p>
+    <div class="cover-img card bg-purple-light">
+        <img :src="event.coverImg" alt="" class="img-fluid rounded">
+        <div class="p-0 ms-2 mt-2">
+        <p  class="fw-bold mb-0">{{ event.name }}</p>
+        </div>
+        <div class="">
+          <p class="p-0 ms-2 mb-0">{{ event.location }}</p>
+        </div>
+        <div class="">
+          <p class="p-0 ms-2 mb-0">{{ event.startDate }}</p>
+        </div>
+        <div v-if="event.isCanceled" class="bg-red text-light text-center">
+          <p class="p-0 ms-2 mb-0">Canceled</p>
+        </div>
       </div>
-    </div></router-link>
+    </router-link>
     </template>
 
 
@@ -23,6 +31,7 @@ export default {
     setup(){
     return { 
     coverImg: computed(() => `url(${AppState.events?.coverImg})`),
+    totalCapacity: computed(() => event.capacity - event.ticketCount)
     }
     }
 };
@@ -56,6 +65,14 @@ export default {
 
 .bg-purple{
     background-color: rgb(107, 111, 234) 
+}
+
+.bg-purple-light{
+    background-color: rgb(127, 158, 225) 
+}
+
+.bg-red{
+  background-color: rgb(196, 34, 34) ;
 }
 
 .convo-text{
