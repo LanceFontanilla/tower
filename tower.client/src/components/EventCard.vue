@@ -1,6 +1,6 @@
 <template>
   <router-link style="text-decoration: none; color:black" :to="{ name: 'Event Details', params: { eventId: event.id } }">
-    <div class="cover-img card bg-purple-light">
+    <div class="cover-img card bg-purple-light ">
         <img :src="event.coverImg" alt="" class="img-fluid rounded">
         <div class="p-0 ms-2 mt-2">
         <p  class="fw-bold mb-0">{{ event.name }}</p>
