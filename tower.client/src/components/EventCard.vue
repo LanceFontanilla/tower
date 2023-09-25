@@ -1,7 +1,8 @@
 <template>
   <router-link style="text-decoration: none; color:black" :to="{ name: 'Event Details', params: { eventId: event.id } }">
     <div class="cover-img card bg-purple-light ">
-        <img :src="event.coverImg" alt="" class="img-fluid rounded">
+      <!-- //FIXME - style the event card -->
+        <!-- <img :src="event.coverImg" alt="" class="img-fluid rounded"> -->
         <div class="p-0 ms-2 mt-2">
         <p  class="fw-bold mb-0">{{ event.name }}</p>
         </div>
@@ -28,9 +29,10 @@ import { Event } from '../models/Event.js'
 
 export default {
     props: {event: {type: Event, required: true}},
-    setup(){
+    setup(props){
+      
     return { 
-    coverImg: computed(() => `url(${AppState.events?.coverImg})`),
+    coverImg: computed(() => `url('${props.event.coverImg}')`),
     totalCapacity: computed(() => event.capacity - event.ticketCount)
     }
     }
@@ -42,7 +44,7 @@ export default {
 
 .cover-img{
   width: 100%;
-  
+  background-image: v-bind(coverImg);
   background-position: center;
   background-size: cover;
 }
