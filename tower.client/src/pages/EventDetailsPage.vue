@@ -31,8 +31,8 @@
                         <div class="col-12 col-md-6 mt-3">
                             <span class="mb-4">Event Hosted By:</span><br><img class="profile-pic my-1" :src="activeEvent.creator.picture" alt="">  <span class="fw-bold">{{ activeEvent.creator.name }}</span> 
                         </div>
-                        <div v-if="activeEvent.isCanceled == false " class="col-12 col-md-6 d-flex justify-content-center align-items-center p-0 my-3" >
-                            <div v-if="!hasTicket && user.isAuthenticated && capacity > 0" class="col-12 col-md-6 bg-dark-purple text-center  d-flex justify-content-center align-items-center selectable p-3 rounded" @click="createTicket" role="button">
+                        <div v-if="activeEvent.isCanceled == false || capacity > 0" class="col-12 col-md-6 d-flex justify-content-center align-items-center p-0 my-3" >
+                            <div v-if="!hasTicket && user.isAuthenticated" class="col-12 col-md-6 bg-dark-purple text-center  d-flex justify-content-center align-items-center selectable p-3 rounded" @click="createTicket" role="button">
                                 <h4>Click here to attend!</h4>
                             </div>
                             <div v-else-if="user.isAuthenticated" class="col-12 col-md-6 bg-purple text-center d-flex justify-content-center align-items-center selectable p-3 rounded" @click="deleteTicket" role="button">
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div v-else class="col-12 bg-danger mt-3 d-flex justify-content-center align-items-center">
-                            <h3>THIS EVENT HAS BEEN CANCELED!</h3>
+                            <h3>THIS EVENT HAS BEEN CANCELED OR SOLD OUT!</h3>
                         </div>
                         
                         <div class="text-start">
