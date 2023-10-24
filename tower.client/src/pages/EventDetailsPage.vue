@@ -99,7 +99,9 @@ import { ticketsService } from '../services/TicketsService';
 
 export default {
 setup() {
-
+    onMounted(() => {
+        window.scrollTo(0, 0)
+    })
     const route = useRoute()
     watchEffect(() => {
         getEventById()
