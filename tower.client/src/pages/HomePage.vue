@@ -2,7 +2,7 @@
 <div class="container">
   <section class="row">
     <div class="header-card d-flex align-items-center mb-4">
-      <p class="ms-3 fs-5">Get ahead of the scalpers. Reserve your seat now with real events for real people.</p>
+      <p class="ms-3 fs-5">Get ahead of the scalpers. Reserve your seat now with real events for real people!</p>
       
     </div> 
   </section>
