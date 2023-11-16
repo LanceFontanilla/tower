@@ -34,7 +34,7 @@ export default {
 }
 
 main{
-  background-color: rgba(42, 45, 58, 1);
+  background-color:  black;
 }
 
 .icon{

@@ -74,7 +74,7 @@ export default {
 <style scoped lang="scss">
 
 .header-card{
-  height: 40vh;
+  height: 30vh;
   background-image: url(https://png.pngtree.com/background/20230410/original/pngtree-empty-auditorium-with-seats-before-the-start-of-the-performance-photo-picture-image_2382018.jpg);
   background-position: center;
   background-size: cover;
@@ -89,7 +89,7 @@ export default {
 
 .cover-img{
   background-image: v-bind(coverImg);
-  min-height: 50vh;
+  min-height: 40vh;
   background-position: center;
   background-size: cover;
 }

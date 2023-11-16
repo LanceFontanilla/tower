@@ -58,7 +58,7 @@ export default {
 }
 
 .event-card{
-  height: 45vh;
+  height: 42vh;
   background-color: rgb(180, 192, 242); ;
   color: white;
   backdrop-filter: blur;
@@ -67,15 +67,13 @@ export default {
 .text-wrapper{
    backdrop-filter: blur(15px);
    width: 100%;
-   height: 18vh;
+   height: 16vh;
 }
 
 .tower-bg-danger{
   background-color: rgba(255, 89, 119, 1);
 ;
 }
-
-
 
 .bg-light-purple{
     background-color: rgba(71, 76, 97, 1) 
